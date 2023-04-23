@@ -1,6 +1,6 @@
-function [alpha_score, alpha_position, convergence_plot, fun] = gray_wolf_opt( dim, min_x, max_x,  pack_size, max_iter)
-    f = @F7;
-    fun = f; % Wiem ze chujowo to napisalem ale Matlab to gowno i nie zamierzam tego poprawiac
+function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim, min_x, max_x,  pack_size, max_iter)
+    %f = @F7;
+    %fun = f; % Wiem ze chujowo to napisalem ale Matlab to gowno i nie zamierzam tego poprawiac
     %dziala mi w koncu w appdesignerze, nie mam pojecia czemu i nie mam
     %zamiaru je miec xDD
     %jebac Matlaba
@@ -73,6 +73,8 @@ function [alpha_score, alpha_position, convergence_plot, fun] = gray_wolf_opt( d
         % oraz aktualizacja ich pozycji
         for i = 1:size(positions,1)   
     
+            % HUZZAH
+            % MAGIC
             Flag4ub=positions(i,:)>max_x;  
             Flag4lb=positions(i,:)<min_x;
             positions(i,:)=(positions(i,:).*(~(Flag4ub+Flag4lb)))+max_x.*Flag4ub+min_x.*Flag4lb;         
@@ -111,6 +113,8 @@ function [alpha_score, alpha_position, convergence_plot, fun] = gray_wolf_opt( d
 
     end % while END
 
+    alpha_position = transpose(alpha_position);
+
     function [X] = get_new_position(a, wolf_pos, glob_pos)
     
     % funkcja do zwrocenia pozycji jednego z glownych wilkow.
@@ -135,14 +139,3 @@ function [alpha_score, alpha_position, convergence_plot, fun] = gray_wolf_opt( d
     end % get_new_position END
 
 end % gray_wolf_opt END
-
-function o = F7(x)
-F2 = 1;
-one = 0;
-two = 1;
-for i = 1:length(x)
-    one = one + (x(i)^2/4000);
-    two = two * (cos(x(i)/sqrt(i)));
-end
-o = F2 + one + two;
-end
