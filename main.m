@@ -20,7 +20,7 @@ run("app.mlapp");
 %  lb=-600; 
 %  ub=600;
 %  dim=100;
-%  [best_score, best_pos, convergence_plot] = gray_wolf_opt(fun, dim, lb, ub, agents_num, iterations);
+%[best_score, best_pos, convergence_plot] = gray_wolf_opt(fun, dim, lb, ub, agents_num, iterations);
 %  display(['best score:', num2str(best_score)]);
 %  display(['best pos:', num2str(best_pos)]);
 % 

@@ -1,4 +1,4 @@
-function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim, min_x, max_x,  pack_size, max_iter)
+function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim, min_x, max_x,  pack_size, max_iter, optType)
     %f = @F7;
     %fun = f; % Wiem ze chujowo to napisalem ale Matlab to gowno i nie zamierzam tego poprawiac
     %dziala mi w koncu w appdesignerze, nie mam pojecia czemu i nie mam
@@ -31,13 +31,23 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
     % zeros -> sam wilk nie został wybrany, zostanie wybrany w trakcie
     %          algorytmu
 
-    alpha_score = inf;
+    switch optType
+        case 'MIN'
+            wolfRange = inf;
+            optFactor = 1;
+        case 'MAX'
+            wolfRange = -inf;
+            optFactor = -1;
+        otherwise
+            error('Niepoprawny typ optymalizacyjny!');
+    end
+    alpha_score = wolfRange;
     alpha_position = zeros(1, dim);
 
-    beta_score = inf;
+    beta_score = wolfRange;
     beta_position = zeros(1, dim);
 
-    delta_score = inf;
+    delta_score = wolfRange;
     delta_position = zeros(1, dim);
 
     % inicjalizacja wynikowego wykresu konwergencji
@@ -79,8 +89,8 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
             Flag4lb=positions(i,:)<min_x;
             positions(i,:)=(positions(i,:).*(~(Flag4ub+Flag4lb)))+max_x.*Flag4ub+min_x.*Flag4lb;         
 
-            fitness = f(positions(i, :));
-
+            fitness = optFactor * f(positions(i, :));
+            
             if fitness < alpha_score
                 alpha_score = fitness;
                 alpha_position = positions(i, :);
@@ -94,7 +104,7 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
             if fitness > alpha_score && fitness > beta_score && fitness < delta_score
                 delta_score = fitness;
                 delta_position = positions(i, :);
-            end            
+            end                
         end
         
 

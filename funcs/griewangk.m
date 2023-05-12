@@ -1,4 +1,4 @@
-function o = F7(x)
+function o = griewangk(x)
 F2 = 1;
 one = 0;
 two = 1;
