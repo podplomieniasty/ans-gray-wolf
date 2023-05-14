@@ -36,7 +36,7 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
             wolfRange = inf;
             optFactor = 1;
         case 'MAX'
-            wolfRange = -inf;
+            wolfRange = inf;
             optFactor = -1;
         otherwise
             error('Niepoprawny typ optymalizacyjny!');
@@ -104,7 +104,9 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
             if fitness > alpha_score && fitness > beta_score && fitness < delta_score
                 delta_score = fitness;
                 delta_position = positions(i, :);
-            end                
+            end
+            
+                            
         end
         
 
@@ -124,6 +126,7 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
     end % while END
 
     alpha_position = transpose(alpha_position);
+    alpha_score = optFactor * alpha_score;
 
     function [X] = get_new_position(a, wolf_pos, glob_pos)
     

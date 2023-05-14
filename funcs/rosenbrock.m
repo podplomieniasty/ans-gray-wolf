@@ -1,4 +1,4 @@
-function [res] = second_funcjon(x)
+function [res] = rosenbrock(x)
 
     res = 0;
     for i = 1:length(x)-1

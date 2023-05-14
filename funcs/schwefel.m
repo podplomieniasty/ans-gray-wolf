@@ -1,4 +1,4 @@
-function [res] = Schefel(x)
+function [res] = schwefel(x)
 
     res = 0;
     for i = 1:length(x)
