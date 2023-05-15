@@ -1,12 +1,5 @@
 function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim, min_x, max_x,  pack_size, max_iter, optType)
-    %f = @F7;
-    %fun = f; % Wiem ze chujowo to napisalem ale Matlab to gowno i nie zamierzam tego poprawiac
-    %dziala mi w koncu w appdesignerze, nie mam pojecia czemu i nie mam
-    %zamiaru je miec xDD
-    %jebac Matlaba
     %   ALGORYTM SZAREGO WILKA, v.1
-    %   
-    % 
     %   
     % parametry  
     %-------------------------------------------------------------
