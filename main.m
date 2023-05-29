@@ -4,8 +4,8 @@
 clc; clear;
 
 % konfiguracja ścieżek projektowych
-% addpath("assets\");
-% addpath("funcs\");
+addpath("assets\");
+addpath("funcs\");
 
 % uruchomienie aplikacji
 run("app.mlapp");

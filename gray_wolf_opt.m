@@ -23,9 +23,7 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
     % inf   -> w celach optymalizacyjnych
     % zeros -> sam wilk nie został wybrany, zostanie wybrany w trakcie
     %          algorytmu
-
-    f = @test_func;
-
+    
     switch optType
         case 'MIN'
             wolfRange = inf;
@@ -83,8 +81,8 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
             Flag4ub=positions(i,:)>max_x;  
             Flag4lb=positions(i,:)<min_x;
             positions(i,:)=(positions(i,:).*(~(Flag4ub+Flag4lb)))+max_x.*Flag4ub+min_x.*Flag4lb;         
-
-            fitness = optFactor * f(positions(i, :));
+            
+            fitness = optFactor * f(round(positions(i, :)));
             
             if fitness < alpha_score
                 alpha_score = fitness;

@@ -11,41 +11,42 @@ function [output] = test_func(x)
     %
     % funkcja celu f(m,N) = L(1 - p_odm) * r - c_1 * N - c_2 * m;
     
+    m = x(1);
+    N = x(2);
+
     L = 40;
     M = 20;
     r = 5;
     c_1 = 1;
     c_2 = 10;
 
-    % x = [x1, x2] = [m, N]
-
-    x = round(x);
-    x = abs(x);
-
     ro = L/M;
-    q = ro / x(1);
 
-    % obliczanie p0
-    if q == 1
+    if ro == m
         sum = 0;
-        for i = 0 : length(x) - 1
-            sum = sum + (ro^i)/(factorial(i)) + ((ro^x(1))/(factorial(x(1)))) * (x(2) + 1);
+        for k = 0 : m - 1
+            a = (ro^k)/(factorial(k));
+            b = (ro^m)/(factorial(m));
+            b = b * (N-1);
+            sum = sum + a + b;
         end
-        sum = sum^(-1);
-        p0 = sum;
+        p0 = sum^(-1);
     else
         sum = 0;
-        for i = 0 : x(1) - 1
-            up = 1 - (ro / x(1))^(x(2)+1);
-            down = 1 - (ro/x(1));
-            sum = sum + (ro^i)/(factorial(i)) + ((ro^x(1))/(ro^x(1))) * (up / down);
+        for k = 0 : m - 1
+            a = (ro^k)/(factorial(k));
+            b = (ro^m)/(factorial(m));
+            up = 1 - (ro / m)^(N+1);
+            down = 1 - (ro/m);
+            c = (up/down)*(N+1);
+            sum = sum + a + b*c;
         end
-        sum = sum^(-1);
-        p0 = sum;
+        p0 = sum^(-1);
     end
 
-    p_odm = (ro^(x(1) + x(2)))/(x(1)*factorial(x(1))) * p0;
-            
+    up = ro^(m+N);
+    down = (m^(m+N))*factorial(m);
+    p_odm = (up/down)*p0;
 
     output = L * (1 - p_odm) * r - c_1 * x(2) - c_2 * x(1);
 end
