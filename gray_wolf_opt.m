@@ -118,7 +118,7 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
 
     end % while END
 
-    alpha_position = transpose(alpha_position);
+    alpha_position = transpose(round(alpha_position));
     alpha_score = optFactor * alpha_score;
 
     function [X] = get_new_position(a, wolf_pos, glob_pos)
