@@ -21,13 +21,14 @@ function [output] = test_func(x)
     c_2 = 10;
 
     ro = L/M;
+    q1 = ro / m;
 
-    if ro == m
+    if q1 == 1
         sum = 0;
         for k = 0 : m - 1
             a = (ro^k)/(factorial(k));
             b = (ro^m)/(factorial(m));
-            b = b * (N-1);
+            b = b * (N+1);
             sum = sum + a + b;
         end
         p0 = sum^(-1);
@@ -38,15 +39,15 @@ function [output] = test_func(x)
             b = (ro^m)/(factorial(m));
             up = 1 - (ro / m)^(N+1);
             down = 1 - (ro/m);
-            c = (up/down)*(N+1);
+            c = (up/down);
             sum = sum + a + b*c;
         end
         p0 = sum^(-1);
     end
 
-    up = ro^(m+N);
-    down = (m^(m+N))*factorial(m);
+    up = ro^(N+m);
+    down = (m^(N))*factorial(m);
     p_odm = (up/down)*p0;
-
-    output = L * (1 - p_odm) * r - c_1 * x(2) - c_2 * x(1);
+    
+    output = L * (1 - p_odm) * r - c_1 * N - c_2 * m;
 end

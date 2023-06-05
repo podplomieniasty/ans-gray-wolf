@@ -1,4 +1,4 @@
-function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim, min_x, max_x,  pack_size, max_iter, optType)
+function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim, min_x, max_x,  pack_size, max_iter, optType, roundValues)
     %   ALGORYTM SZAREGO WILKA, v.1
     %   
     % parametry  
@@ -34,6 +34,16 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
         otherwise
             error('Niepoprawny typ optymalizacyjny!');
     end
+
+    switch roundValues
+        case true
+            roundV = true;
+        case false
+            roundV = false;
+        otherwise
+            error('Niepoprawny typ zaokrąglenia');
+    end
+
     alpha_score = wolfRange;
     alpha_position = zeros(1, dim);
 
@@ -82,21 +92,27 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
             Flag4lb=positions(i,:)<min_x;
             positions(i,:)=(positions(i,:).*(~(Flag4ub+Flag4lb)))+max_x.*Flag4ub+min_x.*Flag4lb;         
             
-            fitness = optFactor * f(round(positions(i, :)));
+            if roundV == true
+                newPos = round(positions(i,:));
+            else
+                newPos = positions(i,:);
+            end
+
+            fitness = optFactor * f(newPos);
             
             if fitness < alpha_score
                 alpha_score = fitness;
-                alpha_position = positions(i, :);
+                alpha_position = newPos;
             end
 
             if fitness > alpha_score && fitness < beta_score
                 beta_score = fitness;
-                beta_position = positions(i, :);
+                beta_position = newPos;
             end
 
             if fitness > alpha_score && fitness > beta_score && fitness < delta_score
                 delta_score = fitness;
-                delta_position = positions(i, :);
+                delta_position = newPos;
             end
             
                             
@@ -118,7 +134,7 @@ function [alpha_score, alpha_position, convergence_plot] = gray_wolf_opt(f, dim,
 
     end % while END
 
-    alpha_position = transpose(ceil(alpha_position));
+    alpha_position = transpose(alpha_position);
     alpha_score = optFactor * alpha_score;
     convergence_plot = convergence_plot * optFactor;
 
